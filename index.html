@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кредитный калькулятор</title>
+    <!-- Подключение стилей Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <!-- Хедер -->
+    <header class="bg-dark text-white py-2">
+        <div class="container d-flex justify-content-between align-items-center">
+            <!-- Лого или текст слева -->
+            <div>
+                <h2 class="m-0">Скоринговая система (Демо)</h2>
+            </div>
+            <!-- Аккаунт пользователя с фото и именем справа -->
+            <div class="d-flex align-items-center">
+                <img src="user-photo.png" alt="User Photo" class="rounded-circle" style="width: 40px; height: 40px;">
+                <div class="ml-2">
+                    <span>Demo User</span>
+                    <p class="m-0">Demo</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="container mt-4">
+        <h3>Кредитные данные</h3>
+        <form id="credit-form">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="amount">Сумма:</label>
+                    <input type="number" id="amount" name="amount" class="form-control" min="1" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="term">Срок (месяцы):</label>
+                    <input type="number" id="term" name="term" class="form-control" min="1" max="12" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="interest">Процентная ставка (%):</label>
+                    <input type="number" id="interest" name="interest" class="form-control" step="0.01" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="loan-date">Дата и время кредита:</label>
+                    <input type="datetime-local" id="loan-date" name="loan-date" class="form-control" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="purpose">Назначение:</label>
+                    <select id="purpose" name="purpose" class="form-control" required>
+                        <option value="">Выберите назначение</option>
+                        <option value="автокредит">Автокредит</option>
+                        <option value="ипотека">Ипотека</option>
+                        <option value="личные нужды">Личные нужды</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="currency">Валюта:</label>
+                    <select id="currency" name="currency" class="form-control" required>
+                        <option value="">Выберите валюту</option>
+                        <option value="usd">USD</option>
+                        <option value="eur">EUR</option>
+                        <option value="rub">RUB</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="monthly-payment">Ежемесячный платеж по кредиту:</label>
+                    <input type="text" id="monthly-payment" name="monthly-payment" class="form-control" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="interest-income">Объем процентных доходов по кредиту:</label>
+                    <input type="text" id="interest-income" name="interest-income" class="form-control" readonly>
+                </div>
+            </div>
+            <button type="button" id="calculate-btn" class="btn btn-primary">Рассчитать</button>
+            <button type="button" id="reset-btn" class="btn btn-secondary ml-2">Сбросить</button>
+        </form>
+    </section>
+
+    <section class="container mt-4">
+        <h3>Данные клиента</h3>
+        <form id="client-form">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="age">Возраст:</label>
+                    <input type="number" id="age" name="age" class="form-control" min="18" max="99" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="gender">Пол:</label>
+                    <select id="gender" name="gender" class="form-control" required>
+                        <option value="">Выберите пол</option>
+                        <option value="Мужской">Мужской</option>
+                        <option value="Женский">Женский</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="bjit">Скоринговый балл БЖИТ (A-J):</label>
+                    <select id="bjit" name="bjit" class="form-control" required>
+                        <option value="">Выберите скоринговый балл</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                        <option value="H">H</option>
+                        <option value="I">I</option>
+                        <option value="J">J</option>
+                        <option value="absent">Отсутствует</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="education">Образование:</label>
+                    <select id="education" name="education" class="form-control" required>
+                        <option value="">Выберите образование</option>
+                        <option value="Среднее">Среднее</option>
+                        <option value="Среднее специальное">Среднее специальное</option>
+                        <option value="Высшее">Высшее</option>
+                        <option value="Другое">Другое</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="marital-status">Семейное положение:</label>
+                    <select id="marital-status" name="marital-status" class="form-control" required>
+                        <option value="">Выберите семейное положение</option>
+                        <option value="Холост">Холост</option>
+                        <option value="Замужем / Женат">Замужем / Женат</option>
+                        <option value="Разведен(а)">Разведен(а)</option>
+                        <option value="Вдовец / Вдова">Вдовец / Вдова</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="region">Район:</label>
+                    <select id="region" name="region" class="form-control" required>
+                        <option value="">Выберите район</option>
+                        <option value="Центральный">Центральный</option>
+                        <option value="Северный">Северный</option>
+                        <option value="Южный">Южный</option>
+                        <option value="Западный">Западный</option>
+                        <option value="Восточный">Восточный</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </section>
+
+    <section class="container mt-4">
+        <h3>Обеспеченность клиента</h3>
+        <form id="client-form">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="work-status">Статус на работе:</label>
+                    <select id="work-status" name="work-status" class="form-control" required>
+                        <option value="">Выберите статус на работе</option>
+                        <option value="working">Работающий(ая)</option>
+                        <option value="not working">Безработный(ая)</option>
+                        <option value="else">Другое</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="work-experience">Опыт работы (лет):</label>
+                    <input type="number" id="work-experience" name="work-experience" class="form-control" min="1"
+                        required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="car">Наличие автомобиля:</label>
+                    <select id="car" name="car" class="form-control" required>
+                        <option value="">Выберите наличие автомобиля</option>
+                        <option value="absent">Отсутствует</option>
+                        <option value="credit">Кредит</option>
+                        <option value="property">Собственность</option>
+                        <option value="else">Другое</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="car-released">Год выпуска автомобиля:</label>
+                    <input type="number" id="car-released" name="car-released" class="form-control" min="1900" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="work-place">Место работы:</label>
+                    <select id="work-place" name="work-place" class="form-control" required>
+                        <option value="">Выберите место работы</option>
+                        <option value="absent">Отсутствует</option>
+                        <option value="private company">Частная компания</option>
+                        <option value="individual entrepreneur">Индивидуальный предприниматель</option>
+                        <option value="else">Другое</option>
+                        <option value="state organization">Общественная организация</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="monthly-income">Ежемесячный доход:</label>
+                    <input type="number" id="monthly-income" name="monthly-income" class="form-control" min="1"
+                        required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="device-os">Операционная система устройства:</label>
+                    <select id="device-os" name="device-os" class="form-control" required>
+                        <option value="">Выберите операционную систему устройства</option>
+                        <option value="android">Android</option>
+                        <option value="ios">Ios</option>
+                        <option value="else">Другое</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="house">Наличие жилья:</label>
+                    <select id="house" name="house" class="form-control" required>
+                        <option value="">Выберите наличие жилья</option>
+                        <option value="absent">Отсутствует</option>
+                        <option value="credit">Кредит</option>
+                        <option value="property">Собственность</option>
+                        <option value="else">Другое</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </section>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // JavaScript code here
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("credit-form");
+            const amountInput = form.querySelector("#amount");
+            const percentageInput = form.querySelector("#interest");
+            const termInput = form.querySelector("#term");
+            const monthlyPaymentInput = form.querySelector("#monthly-payment");
+            const interestIncomeInput = form.querySelector("#interest-income");
+            const calculateBtn = document.getElementById("calculate-btn");
+            const resetBtn = document.getElementById("reset-btn");
+
+            calculateBtn.addEventListener("click", function () {
+                const amount = parseFloat(amountInput.value) || 0;
+                const percentage = parseFloat(percentageInput.value) || 0;
+                const term = parseFloat(termInput.value) || 1;
+
+                const monthlyInterestRate = (percentage / 100) / 12;
+                const denominator = Math.pow(1 + monthlyInterestRate, term) - 1;
+                const monthlyPayment = (amount * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, term))) / denominator;
+                const totalInterest = (monthlyPayment * term) - amount;
+
+                monthlyPaymentInput.value = monthlyPayment.toFixed(2);
+                interestIncomeInput.value = totalInterest.toFixed(2);
+            });
+
+            resetBtn.addEventListener("click", function () {
+                form.reset();
+                monthlyPaymentInput.value = "";
+                interestIncomeInput.value = "";
+            });
+        });
+    </script>
+</body>
+
+</html>
